@@ -3,18 +3,18 @@ const multerConfig = require("../config/multer");
 const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
 const BUCKET = process.env.BUCKET;
-const aws = require("aws-sdk");
-const multer = require("multer");
-const multerS3 = require("multer-s3");
+// const aws = require("aws-sdk");
+// const multer = require("multer");
+// const multerS3 = require("multer-s3");
 
 const uploadNewMaterial = async (req, res) => {
   try {
     const authHeader = req.get("authorization");
 
     if (!authHeader) {
-      return res
-        .status(401)
-        .json({ message: "Você precisa estar logado para editar um post!" });
+      return res.status(401).json({
+        message: "Você precisa estar logada para realizar tal procedimento!",
+      });
     }
     const token = authHeader.split(" ")[1];
     await jwt.verify(token, SECRET, async function (erro) {
@@ -30,61 +30,63 @@ const uploadNewMaterial = async (req, res) => {
       });
       const savedMaterial = await newMaterial.save();
       res.status(201).send({
-        message: "Successfully uploaded " + req.file.location + " location!",
+        message:
+          "Upload realizado com sucesso. " +
+          req.file.location +
+          "  < Link de acesso",
         savedMaterial,
       });
-      //res.status(201).send('Successfully uploaded ' + req.file.location + ' location!')
     });
   } catch (error) {
     console.log(error);
     res.status(500).json(error.message);
   }
-}; //funcionando no mongo e s3
+};
 
 const findAllMaterial = async (req, res) => {
   try {
     const authHeader = req.get("authorization");
 
     if (!authHeader) {
-      return res
-        .status(401)
-        .json({ message: "Você precisa estar logado para editar um post!" });
+      return res.status(401).json({
+        message: "Você precisa estar logada para realizar tal procedimento!",
+      });
     }
     const token = authHeader.split(" ")[1];
     await jwt.verify(token, SECRET, async function (erro) {
       if (erro) {
-        return res.status(403).send("erro de autentificação");
+        return res.status(403).send("Erro de autentificação");
       }
       const allMateriais = await materialModel.find();
-      res.status(200).json(allMateriais);
+      res.status(200).send(allMateriais.Body);
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
-}; //funcionando
+};
 
 const findDownloadMaterial = async (req, res) => {
   const filename = req.params.filename;
   const downloadMaterial = await multerConfig.s3
     .getObject({ Bucket: BUCKET, Key: filename })
     .promise();
-  res.send(downloadMaterial.Body);
-}; //funcionando
+  res.status(200).send(downloadMaterial.Body);
+};
 
 const findMaterialById = async (req, res) => {
   try {
     const authHeader = req.get("authorization");
 
     if (!authHeader) {
-      return res
-        .status(401)
-        .json({ message: "Você precisa estar logado para editar um post!" });
+      return res.status(401).json({
+        message: "Você precisa estar logada para realizar tal procedimento!",
+      });
     }
     const token = authHeader.split(" ")[1];
     await jwt.verify(token, SECRET, async function (erro) {
       if (erro) {
-        return res.status(403).send("erro de autentificação");
+        return res.status(403).send("Erro de autentificação");
       }
       const findMaterialId = await materialModel.findById(req.params.id);
       res.status(200).json(findMaterialId);
@@ -93,21 +95,21 @@ const findMaterialById = async (req, res) => {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
-}; //funcionando
+};
 
 const deleteMaterial = async (req, res) => {
   try {
     const authHeader = req.get("authorization");
 
     if (!authHeader) {
-      return res
-        .status(401)
-        .json({ message: "Você precisa estar logado para editar um post!" });
+      return res.status(401).json({
+        message: "Você precisa estar logada para realizar tal procedimento!",
+      });
     }
     const token = authHeader.split(" ")[1];
     await jwt.verify(token, SECRET, async function (erro) {
       if (erro) {
-        return res.status(403).send("erro de autentificação");
+        return res.status(403).send("Erro de autentificação");
       }
       const { id, filename } = req.body;
 
@@ -115,31 +117,34 @@ const deleteMaterial = async (req, res) => {
         .deleteObject({ Bucket: BUCKET, Key: filename })
         .promise();
 
-      const deleteMaterial = await materialModel.findByIdAndDelete(id);
-      const message = `Material with id ${deleteMaterial._id} was successfully deleted`;
-      res.status(200).json({ message });
+      await materialModel.findByIdAndDelete(id);
+      res
+        .status(200)
+        .json({
+          message: "Material deletado com sucesso no MongoDB e na Amazon s3",
+        });
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
   }
-}; //funcionando no mongo e s3
+};
 
 const updateMaterialById = async (req, res) => {
   try {
     const authHeader = req.get("authorization");
 
     if (!authHeader) {
-      return res
-        .status(401)
-        .json({ message: "Você precisa estar logado para editar um post!" });
+      return res.status(401).json({
+        message: "Você precisa estar logada para realizar tal procedimento!",
+      });
     }
     const token = authHeader.split(" ")[1];
     await jwt.verify(token, SECRET, async function (erro) {
       if (erro) {
         return res.status(403).send("erro de autentificação");
       }
-      const { description} = req.body;
+      const { description } = req.body;
       const updateMaterial = await materialModel.findByIdAndUpdate(
         req.params.id,
         {
@@ -149,13 +154,13 @@ const updateMaterialById = async (req, res) => {
 
       res
         .status(200)
-        .json({ message: "Material successfully updated", updateMaterial });
+        .json({ message: "Descrição do material atualizada com sucesso", updateMaterial });
     });
   } catch {
     console.error(error);
     res.status(500).json({ message: error.message });
   }
-};// funcionando
+};
 
 module.exports = {
   findAllMaterial,
