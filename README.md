@@ -34,8 +34,7 @@ Para realizar o UPLOAD do material é necessário realizar o seguinte procedimen
 > 4°: Em value anexar o arquivo;
 > 5°: Clicar em Send; <br>
 > <img src="MVC1/assets/upload.png" alt="post" width="400">
-> }
-> <br>
+> }<br>
 
 Para realizar o DOWNLOAD do material é necessário realizar o seguinte procedimento:
 
@@ -49,8 +48,7 @@ Para realizar o DOWNLOAD do material é necessário realizar o seguinte procedim
 > <img src="MVC1/assets/download.png" alt="post" width="400"> <br>
 > OU <br>
 > <img src="MVC1/assets/url.png" alt="post" width="400">
-> }
-> <br>
+> }<br>
 
 ## Rotas
 
