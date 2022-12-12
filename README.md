@@ -1,7 +1,7 @@
 # MATERIAIS-ADAPTADOS-API
 
 <h1 align="center">
-  <img src="assets/wallpaper.png" alt="capa" width="600">
+  <img src="MVC1/assets/wallpaper.png" alt="capa" width="600">
 </h1>
 
 ## Introdução
@@ -31,7 +31,7 @@ Para realizar o UPLOAD do material é necessário realizar o seguinte procedimen
 > 3°: Escreve "file" na key e alterar o tipo para File;
 > 4°: Em value anexar o arquivo; 
 > 5°: Clicar em Send; <br>
->  <img src="assets/upload.png" alt="post" width="400">
+>  <img src="MVC1/assets/upload.png" alt="post" width="400">
 >} 
 <br>
 
@@ -44,9 +44,9 @@ Para realizar o DOWNLOAD do material é necessário realizar o seguinte procedim
 > 3°: Escreve "file" na key e alterar o tipo para File 
 > 4°: Em value anexar o arquivo 
 > 5°: Clicar em Send <br>
->  <img src="assets/download.png" alt="post" width="400"> <br>
+>  <img src="MVC1/assets/download.png" alt="post" width="400"> <br>
 OU <br>
-<img src="assets/url.png" alt="post" width="400">
+<img src="MVC1/assets/url.png" alt="post" width="400">
 >}
 <br>
 ## Rotas
