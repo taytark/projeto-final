@@ -145,7 +145,6 @@ $ npm start
 | `multer-s3`     | Mecanismo de armazenamento múltiplo de streaming para AWS S3                                                                             |
 | `swagger`       | Gera a documentação                                                                                                                      |
 | `render`        | hospeda a documentação                                                                                                                   |
-| `dotenv`        | Dependência para gerenciar facilmente variáveis de ambiente, não é obrigatório para JWT, mas uma boa prática para configurações em geral |
 
 <br>
 
