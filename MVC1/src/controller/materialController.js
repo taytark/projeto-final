@@ -58,7 +58,7 @@ const findAllMaterial = async (req, res) => {
         return res.status(403).send("Erro de autentificação");
       }
       const allMateriais = await materialModel.find();
-      res.status(200).send(allMateriais.Body);
+      res.status(200).json(allMateriais);
     });
   } catch (error) {
     console.log(error);
