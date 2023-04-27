@@ -9,20 +9,47 @@
     <title>Login</title>
 </head>
 <body>
-    <h2>Faça o login para continuar</h2>
-    <form>              
-        <div>
-            <input type="email" id="email" name="email" placeholder="Digite o seu e-mail">
-            <label for="email" >Digite o seu e-mail</label>
-        </div>
-        <div>
-            <input type="password" id="password" name="password" placeholder="Digite a sua senha">
-            <label for="password" >Digite a sua senha</label>
-        </div>
-        <div>
-            <a href="home.html">Entrar</a>
-        </div>
+    <form id="login-form">
+      <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+      </div>
+      <div>
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha">
+      </div>
+      <button type="submit">Login</button>
     </form>
-        <a href="cadastro.html">Ainda não tenho cadastro</a>
-</body>
+
+    <script>
+      const form = document.getElementById('login-form');
+      
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+        
+        const response = await fetch('https://materiais-adaptados.onrender.com/materialstore/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, senha })
+        });
+        
+        if (response.ok) {
+          const token = await response.text();
+          localStorage.setItem('token', token);
+          alert('Login realizado com sucesso!');
+          window.location.href = 'home.html';
+        } else {
+          const message = await response.text();
+          alert(`Erro ao realizar login`);
+        }
+      });
+    </script>
+    <script src="../controller/autenticacaoController.js"></script>
+    <script src="../routes/autenticacaoRoute.js"></script>
+  </body>
 </html>
