@@ -9,18 +9,22 @@
     <title>Login</title>
 </head>
 <body>
-    <form id="login-form">
+    <form class="login" id="login-form">
+      <h1>Login de usuários</h1>
       <div>
         <label for="email">Email:</label>
-        <input type="text" id="email" name="email">
+        <input type="text" id="email" name="email" placeholder="Digite seu email">
       </div>
       <div>
         <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha">
+        <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
       </div>
       <button type="submit">Login</button>
+      <div>
+        <a href="cadastro.html">Ainda não possui conta?</a>
+      </div>
     </form>
-
+    
     <script>
       const form = document.getElementById('login-form');
       

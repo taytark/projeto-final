@@ -2,37 +2,66 @@
 <html>
 
 <head>
-  <title>Download de Arquivos</title>
+  <meta charset="utf-8">
+  <title>Arquivos</title>
 </head>
 
 <body>
-  <h1>Download de Arquivos</h1>
-  <div>
-    <a href="home.html">Pagina home</a>
-  </div>
-  <div>
-    <a href="downloads.html">Baixe aqui seus arquivos</a>
-  </div>
-  <div>
-    <a href="uploads.html">Adicione aqui seus arquivos</a>
-  </div>
-  <p>Selecione o arquivo que deseja baixar:</p>
-  <select id="arquivos">
-    <option value="">Selecione...</option>
-    <option value="arquivo1">Arquivo 1</option>
-    <option value="arquivo2">Arquivo 2</option>
-    <option value="arquivo3">Arquivo 3</option>
-  </select>
-  <button onclick="baixarArquivo()">Baixar</button>
+  <h1>Arquivos</h1>
+  <a href="home.html">Página inicial</a>
+    <a href="downloads.html">baixe aqui seus arquivos</a>
+    <a href="uploads.html">Adicione seus arquivos</a>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Data de Upload</th>
+        <th>Opções</th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
 
   <script>
-    function baixarArquivo() {
-      var arquivoSelecionado = document.getElementById("arquivos").value;
-      if (arquivoSelecionado != "") {
-        window.location.href = "/download/" + arquivoSelecionado;
+    // Função para adicionar uma nova linha na tabela
+    function addRow(file) {
+      const tableBody = document.getElementById('table-body');
+      const newRow = tableBody.insertRow();
+
+      const nameCell = newRow.insertCell();
+      const nameLink = document.createElement('a');
+      nameLink.href = file.url;
+      nameLink.innerText = file.name;
+      nameCell.appendChild(nameLink);
+
+      const dateCell = newRow.insertCell();
+      const date = new Date(file.uploadDate).toLocaleDateString();
+      dateCell.innerText = date;
+
+      const optionsCell = newRow.insertCell();
+      const downloadLink = document.createElement('a');
+      downloadLink.href = file.url;
+      downloadLink.download = file.name;
+      downloadLink.innerText = 'Baixar';
+      optionsCell.appendChild(downloadLink);
+    }
+
+    // Função para buscar os arquivos na API
+    async function getFiles() {
+      const response = await fetch('https://materiais-adaptados.onrender.com/materialstore/material');
+      if (response.ok) {
+        const data = await response.json();
+        data.forEach(file => addRow(file));
+      } else {
+        alert('Erro ao buscar os arquivos!');
       }
     }
+
+    // Chama a função de busca ao carregar a página
+    window.addEventListener('load', getFiles);
   </script>
+  <script src="../controller/materialController.js"></script>
+  <script src="../routes/materialRoute.js"></script>
 </body>
 
 </html>

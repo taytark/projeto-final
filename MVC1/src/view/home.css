@@ -1,0 +1,64 @@
+body{
+    background-image: url(../view/plano\ de\ fundo.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+form {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+div{
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form div {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+h1{
+    text-align: center;
+    background-color: rgb(246, 171, 0);
+    border: 1px solid rgb(246, 171, 0);
+}
+
+img{
+    max-width: 500px;
+    margin: auto;
+    display: block;
+}
+
+h2{
+    text-align: center;
+}
+
+p{
+    text-align: center;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto;
+  }

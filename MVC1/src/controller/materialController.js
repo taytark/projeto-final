@@ -3,9 +3,9 @@ const multerConfig = require("../config/multer");
 const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
 const BUCKET = process.env.BUCKET;
-// const aws = require("aws-sdk");
-// const multer = require("multer");
-// const multerS3 = require("multer-s3");
+const aws = require("aws-sdk");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
 
 const uploadNewMaterial = async (req, res) => {
   try {
@@ -43,6 +43,34 @@ const uploadNewMaterial = async (req, res) => {
   }
 };
 
+// const findAllMaterial = async (req, res) => {
+//   try {
+//     const authHeader = req.get("authorization");
+
+//     if (!authHeader) {
+//       return res.status(401).json({
+//         message: "Você precisa estar logada para realizar tal procedimento!",
+//       });
+//     }
+//     const token = authHeader.split(" ")[1];
+//     await jwt.verify(token, SECRET, async function (erro) {
+//       if (erro) {
+//         return res.status(403).send("Erro de autentificação");
+//       }
+//       const allMateriais = await materialModel.find();
+//       res.status(200).json(allMateriais);
+      
+//       // const allMateriais = await multerConfig.s3
+//       //   .getObject({ Bucket: BUCKET })
+//       //   .promise();
+//       // res.status(200).send(allMateriais);
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 const findAllMaterial = async (req, res) => {
   try {
     const authHeader = req.get("authorization");
@@ -58,7 +86,19 @@ const findAllMaterial = async (req, res) => {
         return res.status(403).send("Erro de autentificação");
       }
       const allMateriais = await materialModel.find();
-      res.status(200).json(allMateriais);
+
+      // Adiciona a URL do arquivo no resultado
+      const materiaisComArquivo = allMateriais.map(material => {
+        const arquivoURL = `https://s3-up-reprograma.s3.amazonaws.com/${material.nome}`; // Substitua "NOME_DO_BUCKET" pelo nome do seu bucket S3
+        return {
+          nome: material.nome,
+          releaseDate: material.releaseDate.toDateString,
+          description: material.description,
+          arquivoURL,
+        };
+      });
+
+      res.status(200).json(materiaisComArquivo);
     });
   } catch (error) {
     console.log(error);
