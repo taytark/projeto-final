@@ -10,7 +10,6 @@
   <title>Pagina de acesso materiais adaptados</title>
 </head>
 <body>
-  <div id="materials-list"></div>
   <h1>Materiais adaptados</h1>
   <div>
     <ul class="nav nav-underline">
@@ -22,6 +21,10 @@
       </li>
     </ul>
   </div>
+  <form>
+      <div id="materials-list"></div>
+  </form>
+
   
   <script>
     // Função para fazer a requisição GET e exibir os materiais
@@ -46,11 +49,12 @@
         // Itera sobre os materiais e exibe-os na página
         materials.forEach(material => {
           const materialElement = document.createElement('div');
+           const arquivoURL = `https://s3-up-reprograma.s3.amazonaws.com/${material.nome}`
           materialElement.innerHTML = `
             <h3>${material.nome}</h3>
             <p>Descrição: ${material.description}</p>
-            <p>Data de Upload: ${material.releaseDate}</p>
-            <a href="${material.arquivoURL}">Link do Arquivo</a>
+            <p>Data de Publicação: ${material.releaseDate}</p>
+            <a href="${arquivoURL}">Download</a>
             <hr>
           `;
           materialsListElement.appendChild(materialElement);

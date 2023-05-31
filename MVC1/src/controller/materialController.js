@@ -43,34 +43,6 @@ const uploadNewMaterial = async (req, res) => {
   }
 };
 
-// const findAllMaterial = async (req, res) => {
-//   try {
-//     const authHeader = req.get("authorization");
-
-//     if (!authHeader) {
-//       return res.status(401).json({
-//         message: "Você precisa estar logada para realizar tal procedimento!",
-//       });
-//     }
-//     const token = authHeader.split(" ")[1];
-//     await jwt.verify(token, SECRET, async function (erro) {
-//       if (erro) {
-//         return res.status(403).send("Erro de autentificação");
-//       }
-//       const allMateriais = await materialModel.find();
-//       res.status(200).json(allMateriais);
-      
-//       // const allMateriais = await multerConfig.s3
-//       //   .getObject({ Bucket: BUCKET })
-//       //   .promise();
-//       // res.status(200).send(allMateriais);
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
 const findAllMaterial = async (req, res) => {
   try {
     const authHeader = req.get("authorization");
@@ -92,7 +64,7 @@ const findAllMaterial = async (req, res) => {
         const arquivoURL = `https://s3-up-reprograma.s3.amazonaws.com/${material.nome}`; // Substitua "NOME_DO_BUCKET" pelo nome do seu bucket S3
         return {
           nome: material.nome,
-          releaseDate: material.releaseDate.toDateString,
+          releaseDate: material.releaseDate,
           description: material.description,
           arquivoURL,
         };
@@ -158,11 +130,9 @@ const deleteMaterial = async (req, res) => {
         .promise();
 
       await materialModel.findByIdAndDelete(id);
-      res
-        .status(200)
-        .json({
-          message: "Material deletado com sucesso no MongoDB e na Amazon s3",
-        });
+      res.status(200).json({
+        message: "Material deletado com sucesso no MongoDB e na Amazon s3",
+      });
     });
   } catch (error) {
     console.error(error);
@@ -194,7 +164,10 @@ const updateMaterialById = async (req, res) => {
 
       res
         .status(200)
-        .json({ message: "Descrição do material atualizada com sucesso", updateMaterial });
+        .json({
+          message: "Descrição do material atualizada com sucesso",
+          updateMaterial,
+        });
     });
   } catch {
     console.error(error);

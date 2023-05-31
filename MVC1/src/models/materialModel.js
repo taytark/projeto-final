@@ -9,11 +9,11 @@ const materialSchema = new mongoose.Schema({
   nome: { type: String },
   releaseDate: {
     type: Date,
-    default: Date.toLocaleString("br", { timeZone: "America/Sao_Paulo" }),
+    //default: Date.toLocaleString("br", { timeZone: "America/Sao_Paulo" }),
   },
   description: {
     type: String,
-    default: "No description",
+    //default: "No description",  },
   },
 });
 
