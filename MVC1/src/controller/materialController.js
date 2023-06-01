@@ -21,12 +21,13 @@ const uploadNewMaterial = async (req, res) => {
       if (erro) {
         return res.status(403).send("Erro de autentificação");
       }
-      const { nome: nome, releaseDate: releaseDate, description: description } = req.body;
-
+      const { originalname: nome} = req.file;
+      const { releaseDate, description } = req.body;
+      
       const newMaterial = new materialModel({
         nome,
         releaseDate,
-        description,
+        description
       });
       const savedMaterial = await newMaterial.save();
       res.status(201).send({
@@ -58,17 +59,17 @@ const findAllMaterial = async (req, res) => {
       const allMateriais = await materialModel.find();
 
       // Adiciona a URL do arquivo no resultado
-      const materiaisComArquivo = allMateriais.map(material => {
-        const arquivoURL = `https://s3-up-reprograma.s3.amazonaws.com/${material.nome}`; // Substitua "NOME_DO_BUCKET" pelo nome do seu bucket S3
-        return {
-          nome: material.nome,
-          releaseDate: material.releaseDate,
-          description: material.description,
-          arquivoURL,
-        };
-      });
+      // const materiaisComArquivo = allMateriais.map(material => {
+      //   const arquivoURL = `https://s3-up-reprograma.s3.amazonaws.com/${material.nome}`; // Substitua "NOME_DO_BUCKET" pelo nome do seu bucket S3
+      //   return {
+      //     nome: material.originalname,
+      //     releaseDate: material.releaseDate,
+      //     description: material.description,
+      //     arquivoURL,
+      //   };
+      // });
 
-      res.status(200).json(materiaisComArquivo);
+      res.status(200).json(allMateriais);
     });
   } catch (error) {
     console.log(error);

@@ -56,7 +56,7 @@
               const arquivoURL = `https://s3-up-reprograma.s3.amazonaws.com/${material.nome}`;
 
               materialElement.innerHTML = `
-                <h3>${material.nome}</h3>
+                <p>Nome: ${material.nome}</p>
                 <p>Descrição: ${material.description}</p>
                 <p>Data de Publicação: ${material.releaseDate}</p>
                 <a href="${arquivoURL}">Download</a>
@@ -74,5 +74,8 @@
       // Chama a função para buscar os materiais ao carregar a página
       window.onload = fetchMaterials;
     </script>
+     <script src="../controller/materialController.js"></script>
+     <script src="../config/multer.js"></script>
+     <script src="../routes/materialRoute.js"></script>
   </body>
 </html>
