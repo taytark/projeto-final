@@ -21,7 +21,7 @@ const uploadNewMaterial = async (req, res) => {
       if (erro) {
         return res.status(403).send("Erro de autentificação");
       }
-      const { originalname: nome, releaseDate, description } = req.file;
+      const { nome: nome, releaseDate: releaseDate, description: description } = req.body;
 
       const newMaterial = new materialModel({
         nome,
@@ -31,9 +31,7 @@ const uploadNewMaterial = async (req, res) => {
       const savedMaterial = await newMaterial.save();
       res.status(201).send({
         message:
-          "Upload realizado com sucesso. " +
-          req.file.location +
-          "  < Link de acesso",
+          "Upload realizado com sucesso",
         savedMaterial,
       });
     });

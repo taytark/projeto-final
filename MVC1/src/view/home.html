@@ -30,7 +30,7 @@
     // Função para fazer a requisição GET e exibir os materiais
     async function fetchMaterials() {
       try {
-        const response = await fetch('https://materiais-adaptados.onrender.com/materialstore/material/all', {
+        const response = await fetch('http://localhost:3000/materialstore/material/all', {
           headers: {
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRheWFuZXRlc3RlQHJlcHJvZ3JhbWEuY29tIiwiaWF0IjoxNjcwNDQ1ODIwfQ.pXJMYlAhCFo_rhJB85LMY2bmwrnouRKU1pwq2hSqBy8' // Substitua YOUR_TOKEN_HERE pelo token de autenticação válido
           }
