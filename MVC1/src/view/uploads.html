@@ -34,7 +34,7 @@
         <input type="file" id="file" name="file" required />
         <br />
       </div>
-      
+
       <div>
         <label for="releaseDate">Data de envio:</label>
         <input type="date" id="releaseDate" name="releaseDate" required />
@@ -55,6 +55,35 @@
       const form = document.querySelector("form");
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
+        const fileInput = document.getElementById("file");
+        const file = fileInput.files[0];
+        const allowedExtensions = [
+          "doc",
+          "docx",
+          "pdf",
+          "pptx",
+          "ppt",
+          "png",
+          "jpeg",
+          "jpg",
+        ];
+
+        // Verificar se um arquivo foi selecionado
+        if (!file) {
+          alert("Por favor, selecione um arquivo.");
+          return;
+        }
+
+        // Verificar a extensão do arquivo
+        const fileExtension = getFileExtension(file.name).toLowerCase();
+        if (!allowedExtensions.includes(fileExtension)) {
+          alert(
+            "Extensão de arquivo não permitida. Por favor, selecione um arquivo com extensão .doc, .docx, .pdf, .pptx, .ppt, .png, .jpeg ou .jpg."
+          );
+          return;
+        }
+
+        // Restante do código de envio do formulário...
         const formData = new FormData(form);
         const headers = {
           Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRheWFuZXRlc3RlQHJlcHJvZ3JhbWEuY29tIiwiaWF0IjoxNjcwNDQ1ODIwfQ.pXJMYlAhCFo_rhJB85LMY2bmwrnouRKU1pwq2hSqBy8`,
@@ -90,6 +119,10 @@
           this.value = description.slice(0, 50);
         }
       });
+
+      function getFileExtension(filename) {
+        return filename.split(".").pop();
+      }
     </script>
     <script src="../controller/materialController.js"></script>
     <script src="../routes/materialRoute.js"></script>

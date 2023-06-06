@@ -22,15 +22,14 @@ form {
 
 form div {
   display: grid;
-
-  grid-template-columns: 400px 0px 400px 0px 400px 0px 400px 0px;
-  grid-gap: 40px;
+  grid-template-columns: repeat(4, 400px 0px);
+  grid-gap: 30px;
   grid-auto-rows: minmax(20px, auto);
 }
 
 div {
   display: flex;
-  align-items: center;
+  align-items: initial;
   justify-content: center;
 }
 
@@ -77,14 +76,19 @@ b {
   text-decoration: none;
   width: auto;
   max-width: 120px;
-  box-sizing: content-box;
-  transform: translate(50%, 0%);
+  box-sizing: border-box;
+  transform: translate(76%, 0%);
+}
+
+c {
+  height: auto;
+  margin: 0 auto;
 }
 
 .file {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-rows: 1fr auto auto auto auto;
   gap: 15px;
   align-items: center;
   text-align: center;
@@ -94,9 +98,8 @@ b {
 }
 
 .file img {
-  max-width: 100%;
+  width: 300px;
   height: auto;
-  margin-bottom: 10px;
 }
 
 .file h3 {
