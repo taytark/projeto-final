@@ -4,9 +4,10 @@ body {
   background-repeat: no-repeat;
 }
 
-form{
-  width: 1300px;
-  max-height: 640px;
+form {
+  width: 1890px;
+  max-height: 760px;
+  height: auto;
   margin: 0 auto;
   padding: 20px;
   background-color: #f2f2f2;
@@ -19,59 +20,93 @@ form{
   overflow-y: scroll;
 }
 
-form::-webkit-scrollbar{
-width: 30px;
+form div {
+  display: grid;
+
+  grid-template-columns: 400px 0px 400px 0px 400px 0px 400px 0px;
+  grid-gap: 40px;
+  grid-auto-rows: minmax(20px, auto);
 }
 
-form::-webkit-scrollbar-track{
-background-color: #ccc;
-border-radius: 5px;
-}
-
-form::-webkit-scrollbar-thumb{
-background-color: gray;
-border-radius: 5px;
-border: 5px solid gray;
-}
-
-form div{
-  display: block;
-  overflow-y: scroll;
-}
-
-
-div{
+div {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-h1{
+h1 {
   text-align: center;
-  background:linear-gradient(90deg, rgba(218,215,208,1) 0%, rgba(0,85,82,1) 50%, rgba(218,215,208,1) 100%);
-  border: 5px solid linear-gradient(90deg, rgba(218,215,208,1) 100%, rgba(0,85,82,1) 50%, rgba(218,215,208,1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(218, 215, 208, 1) 0%,
+    rgba(0, 85, 82, 1) 50%,
+    rgba(218, 215, 208, 1) 100%
+  );
+  border: 5px solid
+    linear-gradient(
+      90deg,
+      rgba(218, 215, 208, 1) 100%,
+      rgba(0, 85, 82, 1) 50%,
+      rgba(218, 215, 208, 1) 100%
+    );
   color: aliceblue;
 }
 
-a{
-background: rgb(0, 85, 82);
-border-radius: 6px;
-padding: 10px 20px;
-cursor: pointer;
-color: aliceblue;
-border: none;
-font-size: 16px;
-text-decoration: none;
-display: inline-block;
-position: relative;
-left: 50%;
-transform: translateX(-50%);
+a {
+  background: rgb(0, 85, 82);
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: aliceblue;
+  border: none;
+  font-size: 16px;
+  text-decoration: none;
+  width: auto;
+  max-width: 300px;
+  box-sizing: border-box;
 }
 
-h3{
-text-align: center;
+b {
+  background: rgb(0, 85, 82);
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: aliceblue;
+  border: none;
+  font-size: 16px;
+  text-decoration: none;
+  width: auto;
+  max-width: 120px;
+  box-sizing: content-box;
+  transform: translate(50%, 0%);
 }
 
-p{
-text-align: center;
+.file {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 15px;
+  align-items: center;
+  text-align: center;
+  padding: 50px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.file img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.file h3 {
+  margin-bottom: 10px;
+}
+
+.file p {
+  margin-bottom: 10px;
+}
+
+.file small {
+  color: gray;
 }

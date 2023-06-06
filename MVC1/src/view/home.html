@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="home.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="home.css" />
     <title>Página de acesso a materiais adaptados</title>
   </head>
   <body>
@@ -14,10 +19,14 @@
     <div>
       <ul class="nav nav-underline">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="home.html">Página inicial</a>
+          <a class="nav-link active" aria-current="page" href="home.html"
+            >Página inicial</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="uploads.html">Adicione aqui seus arquivos</a>
+          <a class="nav-link" href="uploads.html"
+            >Adicione aqui seus arquivos</a
+          >
         </li>
       </ul>
     </div>
@@ -26,56 +35,124 @@
     </form>
 
     <script>
+      // Função para fazer o download do arquivo
+      function downloadFile(url) {
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = url.split("/").pop();
+        link.target = "_blank";
+        link.click();
+      }
+
       // Função para fazer a requisição GET e exibir os materiais
       async function fetchMaterials() {
         try {
-          const response = await fetch('http://localhost:3000/materialstore/material/all', {
-            headers: {
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRheWFuZXRlc3RlQHJlcHJvZ3JhbWEuY29tIiwiaWF0IjoxNjcwNDQ1ODIwfQ.pXJMYlAhCFo_rhJB85LMY2bmwrnouRKU1pwq2hSqBy8' // Substitua YOUR_TOKEN_HERE pelo token de autenticação válido
+          const response = await fetch(
+            "http://localhost:3000/materialstore/material/all",
+            {
+              headers: {
+                Authorization:
+                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRheWFuZXRlc3RlQHJlcHJvZ3JhbWEuY29tIiwiaWF0IjoxNjcwNDQ1ODIwfQ.pXJMYlAhCFo_rhJB85LMY2bmwrnouRKU1pwq2hSqBy8", // Substitua YOUR_TOKEN_HERE pelo token de autenticação válido
+              },
             }
-          });
-          
+          );
+
           if (!response.ok) {
-            throw new Error('Erro ao buscar os materiais.');
+            throw new Error("Erro ao buscar os materiais.");
           }
 
           const materials = await response.json();
-          const materialsListElement = document.getElementById('materials-list');
+          const materialsListElement =
+            document.getElementById("materials-list");
 
           // Limpa a lista de materiais antes de adicionar os novos
-          materialsListElement.innerHTML = '';
+          materialsListElement.innerHTML = "";
 
           if (materials.length === 0) {
-            const noMaterialsElement = document.createElement('div');
-            noMaterialsElement.textContent = 'Nenhum material didático encontrado.';
+            const noMaterialsElement = document.createElement("div");
+            noMaterialsElement.textContent =
+              "Nenhum material didático encontrado.";
             materialsListElement.appendChild(noMaterialsElement);
           } else {
             // Itera sobre os materiais e exibe-os na página
-            materials.forEach(material => {
-              const materialElement = document.createElement('div');
+            materials.forEach((material) => {
+              const materialElement = document.createElement("div");
+              materialElement.classList.add("file");
               const arquivoURL = `https://s3-up-reprograma.s3.amazonaws.com/${material.nome}`;
 
-              materialElement.innerHTML = `
-                <p>Nome: ${material.nome}</p>
-                <p>Descrição: ${material.description}</p>
-                <p>Data de Publicação: ${material.releaseDate}</p>
-                <a href="${arquivoURL}">Download</a>
-                <hr>
-              `;
+              // Verifica se é um arquivo de imagem
+              if (
+                material.nome.endsWith(".jpg") ||
+                material.nome.endsWith(".jpeg") ||
+                material.nome.endsWith(".png")
+              ) {
+                const imageElement = document.createElement("img");
+                imageElement.src = arquivoURL;
+                imageElement.alt = "Pré-visualização";
+                materialElement.appendChild(imageElement);
+              }
+
+              // Verifica se é um arquivo de apresentação
+              if (
+                material.nome.endsWith(".ppt") ||
+                material.nome.endsWith(".pptx")
+              ) {
+                const iframeElement = document.createElement("iframe");
+                iframeElement.src = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(
+                  arquivoURL
+                )}`;
+
+                materialElement.appendChild(iframeElement);
+              }
+
+              // Verifica se é um arquivo de documento
+              if (
+                material.nome.endsWith(".doc") ||
+                material.nome.endsWith(".docx") ||
+                material.nome.endsWith(".pdf")
+              ) {
+                const iframeElement = document.createElement("iframe");
+                iframeElement.src = `https://docs.google.com/gview?url=${encodeURIComponent(
+                  arquivoURL
+                )}&embedded=true`;
+                materialElement.appendChild(iframeElement);
+              }
+
+              const nameElement = document.createElement("h6");
+              nameElement.textContent = `Nome: ${material.nome}`;
+              materialElement.appendChild(nameElement);
+
+              const descriptionElement = document.createElement("p");
+              descriptionElement.textContent = `Descrição: ${material.description}`;
+              materialElement.appendChild(descriptionElement);
+
+              const releaseDateElement = document.createElement("p");
+              releaseDateElement.textContent = `Data de Publicação: ${material.releaseDate}`;
+              materialElement.appendChild(releaseDateElement);
+
+              const downloadLinkElement = document.createElement("b");
+              downloadLinkElement.href = "#";
+              downloadLinkElement.textContent = "Download";
+              downloadLinkElement.addEventListener("click", () => {
+                downloadFile(arquivoURL);
+              });
+              materialElement.appendChild(downloadLinkElement);
+
               materialsListElement.appendChild(materialElement);
+              materialsListElement.appendChild(document.createElement("hr"));
             });
           }
         } catch (error) {
           console.log(error);
-          alert('Erro ao buscar os materiais.');
+          alert("Erro ao buscar os materiais.");
         }
       }
 
       // Chama a função para buscar os materiais ao carregar a página
       window.onload = fetchMaterials;
     </script>
-     <script src="../controller/materialController.js"></script>
-     <script src="../config/multer.js"></script>
-     <script src="../routes/materialRoute.js"></script>
+    <script src="../controller/materialController.js"></script>
+    <script src="../config/multer.js"></script>
+    <script src="../routes/materialRoute.js"></script>
   </body>
 </html>
