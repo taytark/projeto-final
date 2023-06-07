@@ -3,9 +3,9 @@ const multerConfig = require("../config/multer");
 const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
 const BUCKET = process.env.BUCKET;
-// const aws = require("aws-sdk");
-// const multer = require("multer");
-// const multerS3 = require("multer-s3");
+const aws = require("aws-sdk");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
 
 const uploadNewMaterial = async (req, res) => {
   try {
@@ -21,19 +21,18 @@ const uploadNewMaterial = async (req, res) => {
       if (erro) {
         return res.status(403).send("Erro de autentificação");
       }
-      const { originalname: nome, releaseDate, description } = req.file;
-
+      const { originalname: nome} = req.file;
+      const { releaseDate, description } = req.body;
+      
       const newMaterial = new materialModel({
         nome,
         releaseDate,
-        description,
+        description
       });
       const savedMaterial = await newMaterial.save();
       res.status(201).send({
         message:
-          "Upload realizado com sucesso. " +
-          req.file.location +
-          "  < Link de acesso",
+          "Upload realizado com sucesso",
         savedMaterial,
       });
     });
@@ -58,6 +57,18 @@ const findAllMaterial = async (req, res) => {
         return res.status(403).send("Erro de autentificação");
       }
       const allMateriais = await materialModel.find();
+
+      // Adiciona a URL do arquivo no resultado
+      // const materiaisComArquivo = allMateriais.map(material => {
+      //   const arquivoURL = `https://s3-up-reprograma.s3.amazonaws.com/${material.nome}`; // Substitua "NOME_DO_BUCKET" pelo nome do seu bucket S3
+      //   return {
+      //     nome: material.originalname,
+      //     releaseDate: material.releaseDate,
+      //     description: material.description,
+      //     arquivoURL,
+      //   };
+      // });
+
       res.status(200).json(allMateriais);
     });
   } catch (error) {
@@ -118,11 +129,9 @@ const deleteMaterial = async (req, res) => {
         .promise();
 
       await materialModel.findByIdAndDelete(id);
-      res
-        .status(200)
-        .json({
-          message: "Material deletado com sucesso no MongoDB e na Amazon s3",
-        });
+      res.status(200).json({
+        message: "Material deletado com sucesso no MongoDB e na Amazon s3",
+      });
     });
   } catch (error) {
     console.error(error);
@@ -154,7 +163,10 @@ const updateMaterialById = async (req, res) => {
 
       res
         .status(200)
-        .json({ message: "Descrição do material atualizada com sucesso", updateMaterial });
+        .json({
+          message: "Descrição do material atualizada com sucesso",
+          updateMaterial,
+        });
     });
   } catch {
     console.error(error);
