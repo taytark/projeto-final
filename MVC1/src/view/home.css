@@ -1,7 +1,7 @@
 body {
   background-image: url(../view/imagem_de_fundo.jpeg);
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
 }
 
 form {
