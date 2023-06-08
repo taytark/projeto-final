@@ -1,72 +1,81 @@
-body{
+body {
   background-image: url(../view/plano\ de\ fundo\ \(4\).jpg);
-  background-size: cover;
+  background-size: auto;
   background-repeat: no-repeat;
+
 }
 
 form {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  max-width: 100%;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+  padding: 80px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-  h1{
-    text-align: center;
-  }
+h1 {
+  text-align: center;
+}
 
-  div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  form div {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  label{
-    font-weight: bold;
-    margin-right: 8px;
+form div {
+  margin-bottom: 10px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button[type="submit"] {
+  background-color: rgb(0, 85, 82);
+  color: white;
+  padding: 16px 30px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 14px;
+}
+
+a {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #555;
+  font-size: 20px;
+  margin-bottom: 0;
+  text-decoration: none;
+}
+
+@media (max-width: 765px) {
+  form {
+    padding: 10px;
   }
-  
-  input[type="text"],
-  input[type="password"] {
-    padding: 5px;
-    font-size: 16px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  button[type="submit"] {
-    background-color: rgb(0, 85, 82);
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 16px;
-    display: block;
-    margin: 0 auto;
-  }
-  
-  a {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    color: #555;
-    margin-bottom: 0;
-    text-decoration: none;
-  }
-  
+}

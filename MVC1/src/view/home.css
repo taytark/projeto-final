@@ -5,7 +5,7 @@ body {
 }
 
 form {
-  width: 1890px;
+  width: 100%;
   max-height: 760px;
   height: auto;
   margin: 0 auto;
@@ -35,19 +35,14 @@ div {
 
 h1 {
   text-align: center;
-  background: linear-gradient(
-    90deg,
-    rgba(218, 215, 208, 1) 0%,
-    rgba(0, 85, 82, 1) 50%,
-    rgba(218, 215, 208, 1) 100%
-  );
-  border: 5px solid
-    linear-gradient(
-      90deg,
+  background: linear-gradient(90deg,
+      rgba(218, 215, 208, 1) 0%,
+      rgba(0, 85, 82, 1) 50%,
+      rgba(218, 215, 208, 1) 100%);
+  border: 5px solid linear-gradient(90deg,
       rgba(218, 215, 208, 1) 100%,
       rgba(0, 85, 82, 1) 50%,
-      rgba(218, 215, 208, 1) 100%
-    );
+      rgba(218, 215, 208, 1) 100%);
   color: aliceblue;
 }
 
@@ -112,4 +107,18 @@ c {
 
 .file small {
   color: gray;
+}
+
+@media (max-width: 767px) {
+  form {
+    max-width: 100%;
+    max-height: 80%;
+  }
+  form div {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  b {
+    transform: translate(76%, 0%);
+  }
 }
